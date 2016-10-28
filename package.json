@@ -1,6 +1,7 @@
 {
-  "name": "http-hello-goodbye-world",
+  "name": "http-single-resource",
   "version": "1.0.0",
+  "description": "This is a single resourse http server.",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -11,26 +12,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MugsyCarter/http-hello-goodbye-world.git"
+    "url": "git+https://github.com/MugsyCarter/http-single-resource.git"
   },
-  "author": "Mugsy Carter",
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MugsyCarter/http-hello-goodbye-world/issues"
+    "url": "https://github.com/MugsyCarter/http-single-resource/issues"
   },
-  "homepage": "https://github.com/MugsyCarter/http-hello-goodbye-world#readme",
+  "homepage": "https://github.com/MugsyCarter/http-single-resource#readme",
+  "dependencies": {
+    "sander": "^0.5.1"
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "eslint": "^3.8.1",
     "mocha": "^3.1.2"
-  },
-  "dependencies": {
-    "chai": "^3.5.0",
-    "chai-http": "^3.0.0",
-    "eslint": "^3.8.1",
-    "http": "^0.0.0",
-    "superagent": "^2.3.0"
-  },
-  "description": ""
+  }
 }
