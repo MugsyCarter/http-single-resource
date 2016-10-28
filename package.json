@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/MugsyCarter/http-single-resource#readme",
   "dependencies": {
+    "querystring": "^0.2.0",
     "sander": "^0.5.1"
   },
   "devDependencies": {
