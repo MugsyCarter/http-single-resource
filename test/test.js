@@ -64,25 +64,14 @@ describe('HTML webapp that has a persistent data store', function(){
 
     it('lets the user add more data', function(done){
         chai.request('http://localhost:8080')
-        .get('/?country-entry=Finland&capital-entry=Helsinki')
+        .get('/?country-entry=Spain&capital-entry=Madrid')
         .end(function (err, res) {
             expect(err).to.be.null;
-            var patt = /Helsinki/g;
+            var patt = /Madrid/g;
             assert(patt.test(res.text) === true);
             done();
         });
     });
-
-//     it('sends back special text with time of day in the Spanish query string', function(done){
-//         chai.request('http://localhost:8080/Spanish')
-//             .get('?time=evening')
-//             .end((err, res) => {
-//                 if (err) return done(err);
-//                 assert.equal(res.type, 'text/plain');
-//                 assert.equal(res.text, 'Buenos noches, Mundo');
-//                 done();
-//             });
-//     });
 });
 
 
