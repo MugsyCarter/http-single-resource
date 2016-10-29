@@ -1,5 +1,5 @@
-const server = require('../server');
-const router = require('../router');
+const server = require('../lib/server');
+const router = require('../lib/router');
 const chai = require('chai');
 const assert = require('chai').assert;
 const expect = require('chai').expect;
@@ -9,35 +9,69 @@ chai.use(chaiHttp);
 describe('HTML webapp that has a persistent data store', function(){
 
     it('loads the webpage', function(done){
-//         server.start(router.route);
-//         chai.request('http://localhost:8080')
-//         .get('/')
-//         .end(function (err, res) {
-//             expect(err).to.be.null;
-//             assert(res.text ==='Which language would you like to be greeted in: \n English, Spanish, French, German, Swahili, or Mandarin?\n \n  To add your own enter "new" as the url and then query your language and greeting as a querystring.  \n\n   Example: /new?samoan=Talofa, le Lalolagi.');
-//             done();
-//         });
-//     });
-//     it('routes to different pages', function(done){
-//         console.log('in 2nd test');
-//         chai.request('http://localhost:8080')
-//         .get('/Swahili')
-//         .end(function (err, res) {
-//             expect(err).to.be.null;
-//             assert(res.text ==='Salamu, Dunia.');
-//             done();
-//         });
-//     });
-//     it('displays different messages on different pages', function(done){
-//         console.log('in 2nd test');
-//         chai.request('http://localhost:8080')
-//         .get('/French')
-//         .end(function (err, res) {
-//             expect(err).to.be.null;
-//             assert(res.text ==='Bonjour le monde.');
-//             done();
-//         });
-//     });
+        server.start(router.route);
+        chai.request('http://localhost:8080')
+        .get('/')
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            assert.ok(res);
+            done();
+        });
+    });
+
+    it('does not take data that already exists in the store' , function(done){
+        chai.request('http://localhost:8080')
+        .get('/?country-entry=Spain&capital-entry=Madrid')
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            assert.equal(res.text,'The database already contains an entry for Spain');
+            done();
+        });
+    });
+
+    it('lets the user add data to the store', function(done){
+        chai.request('http://localhost:8080')
+        .get('/?country-entry=Finland&capital-entry=Helsinki')
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            var patt = /Helsinki/g;
+            assert(patt.test(res.text) === true);
+            done();
+        });
+    });
+
+    it('creates persistent data', function(done){
+        chai.request('http://localhost:8080')
+        .get('/')
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            var patt = /Helsinki/g;
+            assert(patt.test(res.text) === true);
+            done();
+        });
+    });
+
+    it('deletes data on command', function(done){
+        chai.request('http://localhost:8080')
+        .get('/nuke')
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            var patt = /Helsinki/g;
+            assert(patt.test(res.text) === false);
+            done();
+        });
+    });
+
+    it('lets the user add more data', function(done){
+        chai.request('http://localhost:8080')
+        .get('/?country-entry=Finland&capital-entry=Helsinki')
+        .end(function (err, res) {
+            expect(err).to.be.null;
+            var patt = /Helsinki/g;
+            assert(patt.test(res.text) === true);
+            done();
+        });
+    });
 
 //     it('sends back special text with time of day in the Spanish query string', function(done){
 //         chai.request('http://localhost:8080/Spanish')
@@ -49,7 +83,7 @@ describe('HTML webapp that has a persistent data store', function(){
 //                 done();
 //             });
 //     });
-// });
+});
 
 
 
